@@ -1,23 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { Box, Typography } from "@mui/material";
-import Links from "../Utils/Links";
-import { putSignOut } from "../Services/authService";
-import { createSignOutBody } from "../Utils/createBodys";
-import {
-  selectTokenExpTime,
-  selectUserToken,
-  setSignOutUser,
-} from "../Redux/user.Slice";
-import { setSignOutPasswords } from "../Redux/passwords.Slice";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { Box, Typography } from '@mui/material';
+import Links from '../Utils/Links';
+import { putSignOut } from '../Services/authService';
+import { selectTokenExpTime, setSignOutUser } from '../Redux/user.Slice';
+import { setSignOutPasswords } from '../Redux/passwords.Slice';
 
 const TokenExpirationChecker = ({ handleToastError }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const TOKEN_EXP_TIME = useSelector(selectTokenExpTime);
-  const USER_TOKEN = useSelector(selectUserToken);
 
   const [isTokenExpired, setIsTokenExpired] = useState(false);
 
@@ -40,13 +34,10 @@ const TokenExpirationChecker = ({ handleToastError }) => {
     const handleTokenExpiration = async () => {
       if (isTokenExpired) {
         try {
-          const signOutBody = createSignOutBody(USER_TOKEN);
-          await putSignOut(signOutBody);
+          await putSignOut();
           dispatch(setSignOutUser());
           dispatch(setSignOutPasswords());
-          handleToastError(
-            "Tu sesión ha caducado. Por favor, inicia sesión nuevamente."
-          );
+          handleToastError('Tu sesión ha caducado. Por favor, inicia sesión nuevamente.');
           navigate(Links.signIn);
         } catch (error) {
           handleToastError(error.response.data.message);
@@ -55,7 +46,7 @@ const TokenExpirationChecker = ({ handleToastError }) => {
     };
 
     handleTokenExpiration();
-  }, [USER_TOKEN, dispatch, handleToastError, isTokenExpired, navigate]);
+  }, [dispatch, handleToastError, isTokenExpired, navigate]);
 
   return null;
 };

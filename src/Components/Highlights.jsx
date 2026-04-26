@@ -38,32 +38,35 @@ const HighlightItem = React.memo(({ icon, title }) => (
 const Highlights = () => {
   const intl = useIntl();
 
-  const ITEMS = [
-    {
-      icon: <SettingsSuggestRoundedIcon />,
-      title: intl.formatMessage({ id: 'flexibleManagement' }),
-    },
-    {
-      icon: <ConstructionRoundedIcon />,
-      title: intl.formatMessage({ id: 'designedToLast' }),
-    },
-    {
-      icon: <ThumbUpAltRoundedIcon />,
-      title: intl.formatMessage({ id: 'intuitiveExperience' }),
-    },
-    {
-      icon: <AutoFixHighRoundedIcon />,
-      title: intl.formatMessage({ id: 'smartAutomation' }),
-    },
-    {
-      icon: <SupportAgentRoundedIcon />,
-      title: intl.formatMessage({ id: 'reliableSupport' }),
-    },
-    {
-      icon: <QueryStatsRoundedIcon />,
-      title: intl.formatMessage({ id: 'detailedTracking' }),
-    },
-  ];
+  const ITEMS = React.useMemo(
+    () => [
+      {
+        icon: <SettingsSuggestRoundedIcon />,
+        title: intl.formatMessage({ id: 'flexibleManagement' }),
+      },
+      {
+        icon: <ConstructionRoundedIcon />,
+        title: intl.formatMessage({ id: 'designedToLast' }),
+      },
+      {
+        icon: <ThumbUpAltRoundedIcon />,
+        title: intl.formatMessage({ id: 'intuitiveExperience' }),
+      },
+      {
+        icon: <AutoFixHighRoundedIcon />,
+        title: intl.formatMessage({ id: 'smartAutomation' }),
+      },
+      {
+        icon: <SupportAgentRoundedIcon />,
+        title: intl.formatMessage({ id: 'reliableSupport' }),
+      },
+      {
+        icon: <QueryStatsRoundedIcon />,
+        title: intl.formatMessage({ id: 'detailedTracking' }),
+      },
+    ],
+    [intl]
+  );
 
   return (
     <Box

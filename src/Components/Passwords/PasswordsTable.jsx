@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { useTheme } from "@mui/material/styles";
+import React from 'react';
+import PropTypes from 'prop-types';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useTheme } from '@mui/material/styles';
 import {
   Box,
   Table,
@@ -16,18 +16,18 @@ import {
   Paper,
   IconButton,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 import {
   FirstPage as FirstPageIcon,
   KeyboardArrowLeft,
   KeyboardArrowRight,
   LastPage as LastPageIcon,
-} from "@mui/icons-material";
-import { useIntl } from "react-intl";
+} from '@mui/icons-material';
+import { useIntl } from 'react-intl';
 
-import BlueButton from "../Generals/BlueButton";
-import CustomIconButton from "../Generals/CustomIconButton";
-import { PasswordModalTypes } from "../../Utils/Enums";
+import BlueButton from '../Generals/BlueButton';
+import CustomIconButton from '../Generals/CustomIconButton';
+import { PasswordModalTypes } from '../../Utils/Enums';
 
 const TablePaginationActions = (props) => {
   const theme = useTheme();
@@ -51,41 +51,25 @@ const TablePaginationActions = (props) => {
 
   return (
     <Box sx={{ flexShrink: 0, ml: 2.5 }}>
-      <IconButton
-        onClick={handleFirstPageButtonClick}
-        disabled={page === 0}
-        aria-label="first page"
-      >
-        {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
+      <IconButton onClick={handleFirstPageButtonClick} disabled={page === 0} aria-label="first page">
+        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
       </IconButton>
-      <IconButton
-        onClick={handleBackButtonClick}
-        disabled={page === 0}
-        aria-label="previous page"
-      >
-        {theme.direction === "rtl" ? (
-          <KeyboardArrowRight />
-        ) : (
-          <KeyboardArrowLeft />
-        )}
+      <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
+        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
       </IconButton>
       <IconButton
         onClick={handleNextButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label="next page"
       >
-        {theme.direction === "rtl" ? (
-          <KeyboardArrowLeft />
-        ) : (
-          <KeyboardArrowRight />
-        )}
+        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
       </IconButton>
       <IconButton
         onClick={handleLastPageButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label="last page"
       >
-        {theme.direction === "rtl" ? <FirstPageIcon /> : <LastPageIcon />}
+        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
       </IconButton>
     </Box>
   );
@@ -102,17 +86,24 @@ const PasswordsTable = ({ rows, handleSeePassword }) => {
   const intl = useIntl();
 
   const columns = [
-    { label: intl.formatMessage({ id: "TableHeadName" }) },
-    { label: intl.formatMessage({ id: "TableHeadDescription" }) },
-    { label: intl.formatMessage({ id: "TableHeadPassword" }) },
-    { label: intl.formatMessage({ id: "TableHeadPassActions" }) },
+    { label: intl.formatMessage({ id: 'TableHeadName' }) },
+    { label: intl.formatMessage({ id: 'TableHeadDescription' }) },
+    { label: intl.formatMessage({ id: 'TableHeadPassword' }) },
+    { label: intl.formatMessage({ id: 'TableHeadPassActions' }) },
   ];
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(20);
 
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const emptyRows = React.useMemo(
+    () => (page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0),
+    [page, rowsPerPage, rows.length]
+  );
+
+  const visibleRows = React.useMemo(
+    () => (rowsPerPage > 0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : rows),
+    [rows, page, rowsPerPage]
+  );
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -137,16 +128,13 @@ const PasswordsTable = ({ rows, handleSeePassword }) => {
         </TableHead>
 
         <TableBody>
-          {(rowsPerPage > 0
-            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : rows
-          ).map((row, idx) => (
+          {visibleRows.map((row, idx) => (
             <TableRow key={idx}>
               <TableCell component="th" scope="row">
-                <Typography>{row.name}</Typography>
+                <Typography>{row.pswd_name}</Typography>
               </TableCell>
               <TableCell align="left">
-                <Typography>{row.description}</Typography>
+                <Typography>{row.pswd_description}</Typography>
               </TableCell>
               <TableCell align="left">
                 <BlueButton
@@ -158,7 +146,7 @@ const PasswordsTable = ({ rows, handleSeePassword }) => {
                 />
               </TableCell>
               <TableCell align="left">
-                <Box sx={{ display: "flex", gap: 1 }}>
+                <Box sx={{ display: 'flex', gap: 1 }}>
                   <CustomIconButton
                     onClick={(event) => {
                       event.preventDefault();
@@ -188,7 +176,7 @@ const PasswordsTable = ({ rows, handleSeePassword }) => {
         <TableFooter>
           <TableRow>
             <TablePagination
-              rowsPerPageOptions={[30, 50, 100, { label: "Todos", value: -1 }]}
+              rowsPerPageOptions={[30, 50, 100, { label: 'Todos', value: -1 }]}
               colSpan={0}
               count={rows.length}
               rowsPerPage={rowsPerPage}
@@ -196,7 +184,7 @@ const PasswordsTable = ({ rows, handleSeePassword }) => {
               slotProps={{
                 select: {
                   inputProps: {
-                    "aria-label": "rows per page",
+                    'aria-label': 'rows per page',
                   },
                   native: true,
                 },

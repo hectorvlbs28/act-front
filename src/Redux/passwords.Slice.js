@@ -1,11 +1,8 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import {
-  getAllPaswords,
-  getPasswordValueById,
-  deletePasswordValueById,
-} from "../Services/passwordsService";
-import { PasswordModalTypes } from "../Utils/Enums";
+import { getAllPaswords, getPasswordValueById, deletePasswordValueById } from '../Services/passwordsService';
+import { PasswordModalTypes } from '../Utils/Enums';
+import { setApiLoading } from './navigation.Slice';
 
 const initialState = {
   passLoading: false,
@@ -14,48 +11,49 @@ const initialState = {
   needUpdate: false,
   passwordSelected: {
     open: false,
-    name: "",
-    description: "",
-    pswdDecrypted: "",
-    type: "",
-    id: "",
+    name: '',
+    description: '',
+    pswdDecrypted: '',
+    type: '',
+    id: '',
   },
   newPassword: {
     open: false,
-    name: "",
-    description: "",
-    password: "",
-    id: "",
-    type: "",
+    name: '',
+    description: '',
+    password: '',
+    id: '',
+    type: '',
   },
 };
 
-export const fetchPasswords = createAsyncThunk(
-  "Passwords/fetchPasswords",
-  async ({ refresh = false }, thunkAPI) => {
-    const state = thunkAPI.getState().Passwords;
+export const fetchPasswords = createAsyncThunk('Passwords/fetchPasswords', async ({ refresh = false }, thunkAPI) => {
+  const state = thunkAPI.getState().Passwords;
+  thunkAPI.dispatch(setApiLoading(true));
 
+  try {
     if (!refresh && state.passwordsList.length > 0) {
+      thunkAPI.dispatch(setApiLoading(false));
       return thunkAPI.fulfillWithValue({
-        message: "No fetch needed",
+        message: 'No fetch needed',
         passwordsList: state.passwordsList,
       });
     }
 
-    try {
-      const { message, passwordsList } = await getAllPaswords();
-      return { message, passwordsList };
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
+    const { message, passwordsList } = await getAllPaswords();
+    thunkAPI.dispatch(setApiLoading(false));
+    return { message, passwordsList };
+  } catch (error) {
+    thunkAPI.dispatch(setApiLoading(false));
+    return thunkAPI.rejectWithValue(error.message);
   }
-);
+});
 
 export const fetchPasswordById = createAsyncThunk(
-  "Passwords/fetchPasswordById",
+  'Passwords/fetchPasswordById',
   async ({ id, name, description, type }, thunkAPI) => {
     try {
-      const { pswdDecrypted } = await getPasswordValueById(id);
+      const { password: pswdDecrypted } = await getPasswordValueById(id);
       return { open: true, name, description, pswdDecrypted, type, id };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -64,7 +62,7 @@ export const fetchPasswordById = createAsyncThunk(
 );
 
 export const fetchDeletePasswordById = createAsyncThunk(
-  "Passwords/fetchDeletePasswordById",
+  'Passwords/fetchDeletePasswordById',
   async ({ id }, thunkAPI) => {
     try {
       await deletePasswordValueById(id);
@@ -75,7 +73,7 @@ export const fetchDeletePasswordById = createAsyncThunk(
 );
 
 export const passwordsSlice = createSlice({
-  name: "Passwords",
+  name: 'Passwords',
   initialState,
   reducers: {
     setSignOutPasswords: (state) => {
@@ -149,19 +147,12 @@ export const passwordsSlice = createSlice({
   },
 });
 
-export const {
-  setSignOutPasswords,
-  clearPasswordSelected,
-  clearNewPassword,
-  openNewPassword,
-} = passwordsSlice.actions;
+export const { setSignOutPasswords, clearPasswordSelected, clearNewPassword, openNewPassword } = passwordsSlice.actions;
 
 export const selectPassLoading = (state) => state.Passwords.passLoading;
 export const selectPasswordsList = (state) => state.Passwords.passwordsList;
-export const selectIsPasswordsListEmpty = (state) =>
-  state.Passwords.passwordsList.length === 0;
-export const selectPasswordSelected = (state) =>
-  state.Passwords.passwordSelected;
+export const selectIsPasswordsListEmpty = (state) => state.Passwords.passwordsList.length === 0;
+export const selectPasswordSelected = (state) => state.Passwords.passwordSelected;
 export const selectNewPassword = (state) => state.Passwords.newPassword;
 export const selectNeedUpdate = (state) => state.Passwords.needUpdate;
 

@@ -1,42 +1,37 @@
-import axios from "axios";
+import axios from 'axios';
 
 const pendingRequests = new Map();
 
 const axiosInstance = axios.create({
-  baseURL: "http://10.238.148.12:8080",
-  timeout: 1000,
-  headers: { "Content-Type": "application/json" },
+  baseURL: import.meta.env.VITE_API_URL,
+  timeout: 10000,
+  headers: { 'Content-Type': 'application/json' },
 });
 
-const getRequestKey = (config) => {
-  return `${config.method}-${config.url}`;
-};
+const getRequestKey = (config) => `${config.method}-${config.url}`;
 
 axiosInstance.interceptors.request.use((config) => {
   const requestKey = getRequestKey(config);
-  if (pendingRequests.has(requestKey)) {
-    const cancelToken = pendingRequests.get(requestKey);
-    cancelToken.cancel("Duplicate request canceled");
-  }
-  const cancelToken = axios.CancelToken.source();
-  config.cancelToken = cancelToken.token;
-  pendingRequests.set(requestKey, cancelToken);
+  const controller = pendingRequests.get(requestKey);
+  if (controller) controller.abort();
+
+  const newController = new AbortController();
+  config.signal = newController.signal;
+  pendingRequests.set(requestKey, newController);
   return config;
 });
 
 axiosInstance.interceptors.response.use(
   (response) => {
-    const requestKey = getRequestKey(response.config);
-    pendingRequests.delete(requestKey);
+    pendingRequests.delete(getRequestKey(response.config));
     return response;
   },
   (error) => {
-    if (axios.isCancel(error)) {
-      return Promise.resolve();
-    } else {
-      const requestKey = getRequestKey(error.config);
-      pendingRequests.delete(requestKey);
+    if (axios.isCancel(error) || error.name === 'CanceledError') {
+      return Promise.reject(error);
     }
+    const key = error.config ? getRequestKey(error.config) : null;
+    if (key) pendingRequests.delete(key);
     return Promise.reject(error);
   }
 );

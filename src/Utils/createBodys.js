@@ -13,11 +13,7 @@ const createSignInBody = (userName, password) => {
   };
 };
 
-const createSignOutBody = (userToken) => {
-  return {
-    userToken,
-  };
-};
+const createSignOutBody = () => ({});
 
 const createNewPasswordBody = (values) => {
   return {
@@ -27,9 +23,4 @@ const createNewPasswordBody = (values) => {
   };
 };
 
-export {
-  createSignUpBody,
-  createSignInBody,
-  createSignOutBody,
-  createNewPasswordBody,
-};
+export { createSignUpBody, createSignInBody, createSignOutBody, createNewPasswordBody };

@@ -1,32 +1,29 @@
-import React, { useEffect } from "react";
-import RefreshIcon from "@mui/icons-material/Refresh";
-import AddIcon from "@mui/icons-material/Add";
-import { useIntl } from "react-intl";
-import { Stack } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect } from 'react';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import AddIcon from '@mui/icons-material/Add';
+import { useIntl } from 'react-intl';
+import { Stack } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
 
-import ViewTemplate from "../Components/Generals/ViewTemplate";
-import PasswordsTable from "../Components/Passwords/PasswordsTable";
+import ViewTemplate from '../Components/Generals/ViewTemplate';
+import PasswordsTable from '../Components/Passwords/PasswordsTable';
 import {
-  selectPassLoading,
   fetchPasswords,
   selectPasswordsList,
   selectIsPasswordsListEmpty,
   fetchPasswordById,
   openNewPassword,
   selectNeedUpdate,
-} from "../Redux/passwords.Slice";
-import { setApiLoading } from "../Redux/navigation.Slice";
-import { selectIsLogged } from "../Redux/user.Slice";
-import ViewPassModal from "../Components/Passwords/ViewPassModal";
-import CustomIconButton from "../Components/Generals/CustomIconButton";
-import NewPassModal from "../Components/Passwords/NewPassModal";
+} from '../Redux/passwords.Slice';
+import { selectIsLogged } from '../Redux/user.Slice';
+import ViewPassModal from '../Components/Passwords/ViewPassModal';
+import CustomIconButton from '../Components/Generals/CustomIconButton';
+import NewPassModal from '../Components/Passwords/NewPassModal';
 
 const Passwords = ({ handleToastError }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
 
-  const PASS_LOADING = useSelector(selectPassLoading);
   const PASSWORD_LIST = useSelector(selectPasswordsList);
   const IS_EMPTY_LIST = useSelector(selectIsPasswordsListEmpty);
   const IS_LOGGED = useSelector(selectIsLogged);
@@ -42,9 +39,9 @@ const Passwords = ({ handleToastError }) => {
   const handleSeePassword = (row, type) => {
     dispatch(
       fetchPasswordById({
-        id: row.id,
-        name: row.name,
-        description: row.description,
+        id: row._id,
+        name: row.pswd_name,
+        description: row.pswd_description,
         type,
       })
     );
@@ -62,21 +59,10 @@ const Passwords = ({ handleToastError }) => {
     if (NEED_UPDATE) handleFetchPasswords(true);
   }, [handleFetchPasswords, NEED_UPDATE]);
 
-  useEffect(() => {
-    dispatch(
-      setApiLoading({
-        status: PASS_LOADING,
-      })
-    );
-  }, [PASS_LOADING, dispatch]);
-
   return (
-    <ViewTemplate viewTitle={intl.formatMessage({ id: "passwordTitle" })}>
+    <ViewTemplate viewTitle={intl.formatMessage({ id: 'passwordTitle' })}>
       <ViewPassModal />
-      <NewPassModal
-        handleToastError={handleToastError}
-        handleFetchPasswords={handleFetchPasswords}
-      />
+      <NewPassModal handleToastError={handleToastError} handleFetchPasswords={handleFetchPasswords} />
 
       <Stack direction="row" spacing={2}>
         <CustomIconButton
@@ -96,10 +82,7 @@ const Passwords = ({ handleToastError }) => {
         />
       </Stack>
 
-      <PasswordsTable
-        rows={PASSWORD_LIST}
-        handleSeePassword={handleSeePassword}
-      />
+      <PasswordsTable rows={PASSWORD_LIST} handleSeePassword={handleSeePassword} />
     </ViewTemplate>
   );
 };

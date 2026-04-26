@@ -1,6 +1,6 @@
 const apisEndPoints = {
   auth: {
-    signUp: "/auth/signup",
+    signUp: "/users/signup",
     signIn: "/auth/signin",
     signOut: "/auth/signout",
   },
