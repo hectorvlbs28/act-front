@@ -3,10 +3,11 @@ import { createRoot } from "react-dom/client";
 import { StyledEngineProvider } from "@mui/material/styles";
 import { IntlProvider } from "react-intl";
 import { Provider } from "react-redux";
-import App from "./Router/App.jsx";
-import esMessages from "./Locales/es.json";
 import { PersistGate } from "redux-persist/integration/react";
-import { store, persistor } from "./Redux/Store.js";
+
+import App from "./app/router";
+import { store, persistor } from "./app/store";
+import esMessages from "./lib/i18n/locales/es.json";
 
 import "./index.css";
 
