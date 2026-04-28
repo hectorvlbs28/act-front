@@ -1,20 +1,15 @@
-import { createListenerMiddleware } from "@reduxjs/toolkit";
-import toast from "react-hot-toast";
+import { createListenerMiddleware } from '@reduxjs/toolkit';
 
-import { setApiLoading } from "../navigation.slice";
+import { setApiLoading } from '../navigation.slice';
 import {
   fetchPasswords,
   fetchPasswordById,
   fetchDeletePasswordById,
-} from "../../features/passwords/store/passwords.slice";
+} from '../../features/passwords/store/passwords.slice';
 
 export const listenerMiddleware = createListenerMiddleware();
 
-const trackedThunks = [
-  fetchPasswords,
-  fetchPasswordById,
-  fetchDeletePasswordById,
-];
+const trackedThunks = [fetchPasswords, fetchPasswordById, fetchDeletePasswordById];
 
 trackedThunks.forEach((thunk) => {
   listenerMiddleware.startListening({
@@ -26,7 +21,7 @@ trackedThunks.forEach((thunk) => {
 
   listenerMiddleware.startListening({
     actionCreator: thunk.fulfilled,
-    effect: (_, { dispatch }) => {
+    effect: (action, { dispatch }) => {
       dispatch(setApiLoading({ status: false }));
     },
   });
@@ -35,8 +30,6 @@ trackedThunks.forEach((thunk) => {
     actionCreator: thunk.rejected,
     effect: (action, { dispatch }) => {
       dispatch(setApiLoading({ status: false }));
-      const message = action.payload || action.error?.message;
-      if (message) toast.error(message);
     },
   });
 });

@@ -1,384 +1,229 @@
 import { createTheme, alpha } from "@mui/material/styles";
 
 const defaultTheme = createTheme();
-
 const customShadows = [...defaultTheme.shadows];
 
+// =============================================================================
+// PALETA CORPORATIVA ACT SISTEMAS
+// Extraída del logotipo oficial: SitemarkIcon.jsx
+// #4876EF → Azul principal ACT  (hsl 224°, 82%, 61%)
+// #00D3AB → Verde teal ACT      (hsl 168°, 100%, 41%)
+// #B4C0D3 → Gris azulado        (hsl 218°, 22%, 77%)
+// =============================================================================
+
+// ─── Azul principal ACT ───────────────────────────────────────────────────────
 export const brand = {
-  50: "hsl(210, 100%, 95%)",
-  100: "hsl(210, 100%, 92%)",
-  200: "hsl(210, 100%, 80%)",
-  300: "hsl(210, 100%, 65%)",
-  400: "hsl(210, 98%, 48%)",
-  500: "hsl(210, 98%, 42%)",
-  600: "hsl(210, 98%, 55%)",
-  700: "hsl(210, 100%, 35%)",
-  800: "hsl(210, 100%, 16%)",
-  900: "hsl(210, 100%, 21%)",
+  50:  "hsl(224, 100%, 96%)",
+  100: "hsl(224, 95%,  92%)",
+  200: "hsl(224, 90%,  82%)",
+  300: "hsl(224, 85%,  71%)",
+  400: "hsl(224, 82%,  61%)",   // ← #4876EF — Azul ACT
+  500: "hsl(224, 82%,  52%)",
+  600: "hsl(224, 82%,  43%)",
+  700: "hsl(224, 82%,  32%)",
+  800: "hsl(224, 82%,  20%)",
+  900: "hsl(224, 82%,  12%)",
 };
 
+// ─── Verde teal ACT (acento / secundario) ─────────────────────────────────────
+export const teal = {
+  50:  "hsl(168, 80%,  96%)",
+  100: "hsl(168, 80%,  90%)",
+  200: "hsl(168, 80%,  78%)",
+  300: "hsl(168, 90%,  62%)",
+  400: "hsl(168, 100%, 41%)",   // ← #00D3AB — Teal ACT
+  500: "hsl(168, 100%, 34%)",
+  600: "hsl(168, 100%, 27%)",
+  700: "hsl(168, 100%, 20%)",
+  800: "hsl(168, 100%, 13%)",
+  900: "hsl(168, 100%, 8%)",
+};
+
+// ─── Grises neutros con leve tono azulado ─────────────────────────────────────
 export const gray = {
-  50: "hsl(220, 35%, 97%)",
-  100: "hsl(220, 30%, 94%)",
-  200: "hsl(220, 20%, 88%)",
-  300: "hsl(220, 20%, 80%)",
-  400: "hsl(220, 20%, 65%)",
-  500: "hsl(220, 20%, 42%)",
-  600: "hsl(220, 20%, 35%)",
-  700: "hsl(220, 20%, 25%)",
-  800: "hsl(220, 30%, 6%)",
-  900: "hsl(220, 35%, 3%)",
+  50:   "hsl(220, 35%, 97%)",
+  100:  "hsl(220, 28%, 94%)",
+  200:  "hsl(220, 22%, 88%)",
+  300:  "hsl(220, 18%, 78%)",
+  400:  "hsl(220, 16%, 60%)",
+  500:  "hsl(220, 14%, 42%)",
+  600:  "hsl(220, 16%, 32%)",
+  700:  "hsl(224, 18%, 22%)",
+  800:  "hsl(224, 25%, 10%)",   // ← dark navy modo oscuro
+  900:  "hsl(224, 30%, 6%)",
   1000: "rgba(0, 0, 0, 0.8)",
 };
 
 export const green = {
-  50: "hsl(120, 80%, 98%)",
-  100: "hsl(120, 75%, 94%)",
-  200: "hsl(120, 75%, 87%)",
-  300: "hsl(120, 61%, 77%)",
-  400: "hsl(120, 44%, 53%)",
-  500: "hsl(120, 59%, 30%)",
-  600: "hsl(120, 70%, 25%)",
-  700: "hsl(120, 75%, 16%)",
-  800: "hsl(120, 84%, 10%)",
-  900: "hsl(120, 87%, 6%)",
+  50:  "hsl(168, 80%, 97%)",
+  100: "hsl(168, 80%, 91%)",
+  200: "hsl(168, 75%, 78%)",
+  300: "hsl(168, 70%, 60%)",
+  400: "hsl(168, 100%, 41%)",
+  500: "hsl(168, 100%, 34%)",
+  600: "hsl(168, 100%, 27%)",
+  700: "hsl(168, 100%, 20%)",
+  800: "hsl(168, 100%, 13%)",
+  900: "hsl(168, 100%, 8%)",
 };
 
 export const orange = {
-  50: "hsl(45, 100%, 97%)",
-  100: "hsl(45, 92%, 90%)",
-  200: "hsl(45, 94%, 80%)",
-  300: "hsl(45, 90%, 65%)",
-  400: "hsl(45, 90%, 40%)",
-  500: "hsl(45, 90%, 35%)",
-  600: "hsl(45, 91%, 25%)",
-  700: "hsl(45, 94%, 20%)",
-  800: "hsl(45, 95%, 16%)",
-  900: "hsl(45, 93%, 12%)",
+  50:  "hsl(36, 100%, 97%)",
+  100: "hsl(36, 92%,  90%)",
+  200: "hsl(36, 90%,  78%)",
+  300: "hsl(36, 88%,  62%)",
+  400: "hsl(36, 88%,  46%)",
+  500: "hsl(36, 88%,  38%)",
+  600: "hsl(36, 88%,  28%)",
+  700: "hsl(36, 90%,  20%)",
+  800: "hsl(36, 92%,  14%)",
+  900: "hsl(36, 94%,  9%)",
 };
 
 export const red = {
-  50: "hsl(0, 100%, 97%)",
-  100: "hsl(0, 92%, 90%)",
-  200: "hsl(0, 94%, 80%)",
-  300: "hsl(0, 90%, 65%)",
-  400: "hsl(0, 90%, 40%)",
-  500: "hsl(0, 90%, 30%)",
-  600: "hsl(0, 91%, 25%)",
-  700: "hsl(0, 94%, 18%)",
-  800: "hsl(0, 95%, 12%)",
-  900: "hsl(0, 93%, 6%)",
-};
-
-export const getDesignTokens = (mode) => {
-  customShadows[1] =
-    mode === "dark"
-      ? "hsla(220, 30%, 5%, 0.7) 0px 4px 16px 0px, hsla(220, 25%, 10%, 0.8) 0px 8px 16px -5px"
-      : "hsla(220, 30%, 5%, 0.07) 0px 4px 16px 0px, hsla(220, 25%, 10%, 0.07) 0px 8px 16px -5px";
-
-  return {
-    palette: {
-      mode,
-      primary: {
-        light: brand[200],
-        main: brand[400],
-        dark: brand[700],
-        contrastText: brand[50],
-        ...(mode === "dark" && {
-          contrastText: brand[50],
-          light: brand[300],
-          main: brand[400],
-          dark: brand[700],
-        }),
-      },
-      info: {
-        light: brand[100],
-        main: brand[300],
-        dark: brand[600],
-        contrastText: gray[50],
-        ...(mode === "dark" && {
-          contrastText: brand[300],
-          light: brand[500],
-          main: brand[700],
-          dark: brand[900],
-        }),
-      },
-      warning: {
-        light: orange[300],
-        main: orange[400],
-        dark: orange[800],
-        ...(mode === "dark" && {
-          light: orange[400],
-          main: orange[500],
-          dark: orange[700],
-        }),
-      },
-      error: {
-        light: red[300],
-        main: red[400],
-        dark: red[800],
-        ...(mode === "dark" && {
-          light: red[400],
-          main: red[500],
-          dark: red[700],
-        }),
-      },
-      success: {
-        light: green[300],
-        main: green[400],
-        dark: green[800],
-        ...(mode === "dark" && {
-          light: green[400],
-          main: green[500],
-          dark: green[700],
-        }),
-      },
-      grey: {
-        ...gray,
-      },
-      divider: mode === "dark" ? alpha(gray[700], 0.6) : alpha(gray[300], 0.4),
-      background: {
-        default: "hsl(0, 0%, 99%)",
-        paper: "hsl(220, 35%, 97%)",
-        ...(mode === "dark" && {
-          default: gray[900],
-          paper: "hsl(220, 30%, 7%)",
-        }),
-      },
-      text: {
-        primary: gray[800],
-        secondary: gray[600],
-        warning: orange[400],
-        ...(mode === "dark" && {
-          primary: "hsl(0, 0%, 100%)",
-          secondary: gray[400],
-        }),
-      },
-      action: {
-        hover: alpha(gray[200], 0.2),
-        selected: `${alpha(gray[200], 0.3)}`,
-        ...(mode === "dark" && {
-          hover: alpha(gray[600], 0.2),
-          selected: alpha(gray[600], 0.3),
-        }),
-      },
-    },
-    typography: {
-      fontFamily: "Inter, sans-serif",
-      h1: {
-        fontSize: defaultTheme.typography.pxToRem(48),
-        fontWeight: 600,
-        lineHeight: 1.2,
-        letterSpacing: -0.5,
-      },
-      h2: {
-        fontSize: defaultTheme.typography.pxToRem(36),
-        fontWeight: 600,
-        lineHeight: 1.2,
-      },
-      h3: {
-        fontSize: defaultTheme.typography.pxToRem(30),
-        lineHeight: 1.2,
-      },
-      h4: {
-        fontSize: defaultTheme.typography.pxToRem(24),
-        fontWeight: 600,
-        lineHeight: 1.5,
-      },
-      h5: {
-        fontSize: defaultTheme.typography.pxToRem(20),
-        fontWeight: 600,
-      },
-      h6: {
-        fontSize: defaultTheme.typography.pxToRem(18),
-        fontWeight: 600,
-      },
-      subtitle1: {
-        fontSize: defaultTheme.typography.pxToRem(18),
-      },
-      subtitle2: {
-        fontSize: defaultTheme.typography.pxToRem(14),
-        fontWeight: 500,
-      },
-      body1: {
-        fontSize: defaultTheme.typography.pxToRem(14),
-      },
-      body2: {
-        fontSize: defaultTheme.typography.pxToRem(14),
-        fontWeight: 400,
-      },
-      caption: {
-        fontSize: defaultTheme.typography.pxToRem(12),
-        fontWeight: 400,
-      },
-    },
-    shape: {
-      borderRadius: 8,
-    },
-    shadows: customShadows,
-  };
+  50:  "hsl(0, 100%, 97%)",
+  100: "hsl(0, 92%,  90%)",
+  200: "hsl(0, 90%,  80%)",
+  300: "hsl(0, 88%,  65%)",
+  400: "hsl(0, 88%,  48%)",
+  500: "hsl(0, 88%,  38%)",
+  600: "hsl(0, 88%,  28%)",
+  700: "hsl(0, 90%,  20%)",
+  800: "hsl(0, 92%,  13%)",
+  900: "hsl(0, 94%,  8%)",
 };
 
 export const colorSchemes = {
   light: {
     palette: {
       primary: {
-        light: brand[200],
-        main: brand[400],
-        dark: brand[700],
-        contrastText: brand[50],
+        light:        brand[200],
+        main:         brand[400],
+        dark:         brand[700],
+        contrastText: "#ffffff",
+      },
+      secondary: {
+        light:        teal[200],
+        main:         teal[400],
+        dark:         teal[700],
+        contrastText: "#ffffff",
       },
       info: {
-        light: brand[100],
-        main: brand[300],
-        dark: brand[600],
+        light:        brand[100],
+        main:         brand[300],
+        dark:         brand[600],
         contrastText: gray[50],
       },
       warning: {
         light: orange[300],
-        main: orange[400],
-        dark: orange[800],
+        main:  orange[400],
+        dark:  orange[700],
       },
       error: {
         light: red[300],
-        main: red[400],
-        dark: red[800],
+        main:  red[400],
+        dark:  red[700],
       },
       success: {
         light: green[300],
-        main: green[400],
-        dark: green[800],
+        main:  green[400],
+        dark:  green[700],
       },
-      grey: {
-        ...gray,
-      },
+      grey:    { ...gray },
       divider: alpha(gray[300], 0.4),
       background: {
-        default: "hsl(0, 0%, 99%)",
-        paper: "hsl(220, 35%, 97%)",
+        default: "hsl(220, 35%, 99%)",
+        paper:   "hsl(220, 30%, 97%)",
       },
       text: {
-        primary: gray[800],
-        secondary: gray[600],
-        warning: orange[400],
+        primary:   gray[800],
+        secondary: gray[500],
+        warning:   orange[400],
       },
       action: {
-        hover: alpha(gray[200], 0.2),
-        selected: `${alpha(gray[200], 0.3)}`,
+        hover:    alpha(brand[400], 0.06),
+        selected: alpha(brand[400], 0.12),
       },
       baseShadow:
-        "hsla(220, 30%, 5%, 0.07) 0px 4px 16px 0px, hsla(220, 25%, 10%, 0.07) 0px 8px 16px -5px",
+        "hsla(224, 50%, 10%, 0.07) 0px 4px 16px 0px, hsla(224, 40%, 15%, 0.07) 0px 8px 16px -5px",
     },
   },
+
   dark: {
     palette: {
       primary: {
-        contrastText: brand[50],
-        light: brand[300],
-        main: brand[400],
-        dark: brand[700],
+        light:        brand[200],
+        main:         brand[300],
+        dark:         brand[700],
+        contrastText: "#ffffff",
+      },
+      secondary: {
+        light:        teal[200],
+        main:         teal[300],
+        dark:         teal[700],
+        contrastText: gray[900],
       },
       info: {
-        contrastText: brand[300],
-        light: brand[500],
-        main: brand[700],
-        dark: brand[900],
+        light:        brand[200],
+        main:         brand[400],
+        dark:         brand[800],
+        contrastText: brand[100],
       },
       warning: {
-        light: orange[400],
-        main: orange[500],
-        dark: orange[700],
+        light: orange[300],
+        main:  orange[400],
+        dark:  orange[700],
       },
       error: {
-        light: red[400],
-        main: red[500],
-        dark: red[700],
+        light: red[300],
+        main:  red[400],
+        dark:  red[700],
       },
       success: {
-        light: green[400],
-        main: green[500],
-        dark: green[700],
+        light: green[300],
+        main:  green[400],
+        dark:  green[700],
       },
-      grey: {
-        ...gray,
-      },
-      divider: alpha(gray[700], 0.6),
+      grey:    { ...gray },
+      divider: alpha(gray[700], 0.5),
       background: {
         default: gray[900],
-        paper: "hsl(220, 30%, 7%)",
+        paper:   gray[800],
       },
       text: {
-        primary: "hsl(0, 0%, 100%)",
-        secondary: gray[400],
+        primary:   "hsl(220, 40%, 96%)",
+        secondary: gray[300],
       },
       action: {
-        hover: alpha(gray[600], 0.2),
-        selected: alpha(gray[600], 0.3),
+        hover:    alpha(brand[300], 0.1),
+        selected: alpha(brand[300], 0.18),
       },
       baseShadow:
-        "hsla(220, 30%, 5%, 0.7) 0px 4px 16px 0px, hsla(220, 25%, 10%, 0.8) 0px 8px 16px -5px",
+        "hsla(224, 60%, 4%, 0.7) 0px 4px 16px 0px, hsla(224, 50%, 8%, 0.8) 0px 8px 16px -5px",
     },
   },
 };
 
 export const typography = {
-  fontFamily: "Inter, sans-serif",
-  h1: {
-    fontSize: defaultTheme.typography.pxToRem(48),
-    fontWeight: 600,
-    lineHeight: 1.2,
-    letterSpacing: -0.5,
-  },
-  h2: {
-    fontSize: defaultTheme.typography.pxToRem(36),
-    fontWeight: 600,
-    lineHeight: 1.2,
-  },
-  h3: {
-    fontSize: defaultTheme.typography.pxToRem(30),
-    lineHeight: 1.2,
-  },
-  h4: {
-    fontSize: defaultTheme.typography.pxToRem(24),
-    fontWeight: 600,
-    lineHeight: 1.5,
-  },
-  h5: {
-    fontSize: defaultTheme.typography.pxToRem(20),
-    fontWeight: 600,
-  },
-  h6: {
-    fontSize: defaultTheme.typography.pxToRem(18),
-    fontWeight: 600,
-  },
-  subtitle1: {
-    fontSize: defaultTheme.typography.pxToRem(18),
-  },
-  subtitle2: {
-    fontSize: defaultTheme.typography.pxToRem(14),
-    fontWeight: 500,
-  },
-  body1: {
-    fontSize: defaultTheme.typography.pxToRem(14),
-  },
-  body2: {
-    fontSize: defaultTheme.typography.pxToRem(14),
-    fontWeight: 400,
-  },
-  caption: {
-    fontSize: defaultTheme.typography.pxToRem(12),
-    fontWeight: 400,
-  },
+  fontFamily: "'Outfit', 'Inter', sans-serif",
+  h1: { fontSize: defaultTheme.typography.pxToRem(48), fontWeight: 700, lineHeight: 1.15, letterSpacing: -0.5 },
+  h2: { fontSize: defaultTheme.typography.pxToRem(36), fontWeight: 700, lineHeight: 1.2 },
+  h3: { fontSize: defaultTheme.typography.pxToRem(28), fontWeight: 600, lineHeight: 1.25 },
+  h4: { fontSize: defaultTheme.typography.pxToRem(22), fontWeight: 600, lineHeight: 1.4 },
+  h5: { fontSize: defaultTheme.typography.pxToRem(18), fontWeight: 600 },
+  h6: { fontSize: defaultTheme.typography.pxToRem(16), fontWeight: 600 },
+  subtitle1: { fontSize: defaultTheme.typography.pxToRem(18) },
+  subtitle2: { fontSize: defaultTheme.typography.pxToRem(14), fontWeight: 500 },
+  body1:     { fontSize: defaultTheme.typography.pxToRem(14) },
+  body2:     { fontSize: defaultTheme.typography.pxToRem(14), fontWeight: 400 },
+  caption:   { fontSize: defaultTheme.typography.pxToRem(12), fontWeight: 400 },
 };
 
-export const shape = {
-  borderRadius: 8,
+export const shape   = { borderRadius: 10 };
+customShadows[1]     = "var(--template-palette-baseShadow)";
+export const shadows = customShadows;
+
+export const getDesignTokens = (mode) => {
+  const scheme = colorSchemes[mode];
+  return { palette: { mode, ...scheme.palette }, typography, shape, shadows: customShadows };
 };
-
-const defaultShadows = [
-  "none",
-  "var(--template-palette-baseShadow)",
-  ...defaultTheme.shadows.slice(2),
-];
-
-export const shadows = defaultShadows;
