@@ -1,10 +1,11 @@
-import toast from "react-hot-toast";
-import { useCallback } from "react";
+import toast from 'react-hot-toast';
+import { useCallback } from 'react';
+import SearchOffIcon from '@mui/icons-material/SearchOff';
 
 const DURATION = {
-  short:   2000,
+  short: 2000,
   default: 4000,
-  long:    6000,
+  long: 6000,
 };
 
 const useToast = () => {
@@ -23,7 +24,12 @@ const useToast = () => {
     toast(message, { duration });
   }, []);
 
-  return { toastError, toastSuccess, toastInfo };
+  const toastEmpty = useCallback((message, duration = DURATION.default) => {
+    if (!message) return;
+    toast(message, { duration, icon: <SearchOffIcon /> });
+  }, []);
+
+  return { toastError, toastSuccess, toastInfo, toastEmpty };
 };
 
 export default useToast;

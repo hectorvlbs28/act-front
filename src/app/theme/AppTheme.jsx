@@ -1,13 +1,13 @@
-import * as React from "react";
-import PropTypes from "prop-types";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-import { inputsCustomizations }     from "./Customizations/Inputs";
-import { dataDisplayCustomizations } from "./Customizations/DataDisplay";
-import { feedbackCustomizations }    from "./Customizations/Feedback";
-import { navigationCustomizations }  from "./Customizations/Navigation";
-import { surfacesCustomizations }    from "./Customizations/Surfaces";
-import { colorSchemes, typography, shadows, shape } from "./ThemePrimitives";
+import { inputsCustomizations } from './Customizations/Inputs';
+import { dataDisplayCustomizations } from './Customizations/DataDisplay';
+import { feedbackCustomizations } from './Customizations/Feedback';
+import { navigationCustomizations } from './Customizations/Navigation';
+import { surfacesCustomizations } from './Customizations/Surfaces';
+import { colorSchemes, typography, shadows, shape } from './ThemePrimitives';
 
 const AppTheme = (props) => {
   const { children, disableCustomTheme, themeComponents } = props;
@@ -17,8 +17,8 @@ const AppTheme = (props) => {
       ? {}
       : createTheme({
           cssVariables: {
-            colorSchemeSelector: "data-mui-color-scheme",
-            cssVarPrefix: "template",
+            colorSchemeSelector: 'data-mui-color-scheme',
+            cssVarPrefix: 'template',
           },
           colorSchemes,
           typography,
@@ -45,9 +45,9 @@ const AppTheme = (props) => {
 };
 
 AppTheme.propTypes = {
-  children:           PropTypes.node,
+  children: PropTypes.node,
   disableCustomTheme: PropTypes.bool,
-  themeComponents:    PropTypes.object,
+  themeComponents: PropTypes.object,
 };
 
 export default AppTheme;

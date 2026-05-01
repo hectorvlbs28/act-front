@@ -1,9 +1,18 @@
-import React from "react";
-import IconButton from "@mui/material/IconButton";
+import React from 'react';
+import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
 
-const CustomIconButton = ({ onClick, icon, sx = {} }) => {
+const CustomIconButton = ({ onClick, icon, text }) => {
+  if (text) {
+    return (
+      <Button onClick={onClick} startIcon={icon} variant="contained" color="primary">
+        {text}
+      </Button>
+    );
+  }
+
   return (
-    <IconButton onClick={onClick} sx={{ border: "none", ...sx }}>
+    <IconButton size="small" onClick={onClick}>
       {icon}
     </IconButton>
   );

@@ -24,6 +24,9 @@
   "signOutBtn": "Cerrar sesión",
   "passwordsBtn": "Contraseñas",
   "passwordTitle": "Administrador de contraseñas",
+  "newPasswordBtn": "Nueva contraseña",
+  "searchPlaceholder": "Buscar por nombre...",
+  "noPassFound": "No se encontraron contraseñas con ese nombre.",
   "ViewPassModalTitle": "Detalles de la contraseña: ",
   "ViewPassModalValue": "Tu contraseña es: ",
   "ViewPassModalDescription": "Descripción : ",
@@ -39,5 +42,6 @@
   "TableHeadPassActions": "Editar / Eliminar",
   "PasswordNotChangesError": "No se detectaron cambios por guardar.",
   "createUser": "Crear usuario",
-  "signUp": "Crear nuevo usuario"
+  "signUp": "Crear nuevo usuario",
+  "viewTable": "- Registros almacenados"
 }
