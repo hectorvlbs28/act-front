@@ -12,7 +12,13 @@ const CustomIconButton = ({ onClick, icon, text }) => {
   }
 
   return (
-    <IconButton size="small" onClick={onClick}>
+    <IconButton
+      size="small"
+      onClick={(e) => {
+        e.preventDefault();
+        onClick();
+      }}
+    >
       {icon}
     </IconButton>
   );

@@ -7,18 +7,19 @@ import { useIntl } from 'react-intl';
 
 import ViewTemplate from '../../shared/components/ui/ViewTemplate';
 import PasswordsTable from './components/PasswordsTable';
-import ViewPassModal from './components/ViewPassModal';
 import NewPassModal from './components/NewPassModal';
 import CustomIconButton from '../../shared/components/ui/CustomIconButton';
 import SearchBar from '../../shared/components/inputs/SearchBar';
 import PassHeader from './components/PassHeader';
 import useToast from '../../Hooks/useToast';
+import SeePassDrawer from './components/SeePassDrawer';
+import DeletePassModal from './components/DeletePassModal';
 import {
   fetchPasswords,
   selectPasswordsList,
   selectIsPasswordsListEmpty,
   selectPassLoading,
-  //fetchPasswordById,
+  fetchPasswordById,
   selectNeedUpdate,
 } from './store/passwords.slice';
 import { selectIsLogged } from '../auth/store/auth.slice';
@@ -52,15 +53,12 @@ const Passwords = () => {
     [dispatch]
   );
 
-  const handleSeePassword = (row, type) => {
-    console.log('handleSeePassword - row', row);
-    console.log('handleSeePassword - row', type);
-    //dispatch(fetchPasswordById({ id: row._id, name: row.pswd_name, description: row.pswd_description, type }));
+  const handleSelectPass = (row, type) => {
+    dispatch(fetchPasswordById({ id: row._id, name: row.pswd_name, description: row.pswd_description, type }));
   };
 
   useEffect(() => {
     const shouldFetch = (IS_EMPTY_LIST && IS_LOGGED) || NEED_UPDATE;
-    console.log(shouldFetch)
     if (shouldFetch) handleFetchPasswords(NEED_UPDATE);
   }, [handleFetchPasswords, IS_EMPTY_LIST, IS_LOGGED, NEED_UPDATE]);
 
@@ -72,12 +70,13 @@ const Passwords = () => {
 
   return (
     <ViewTemplate>
-      <ViewPassModal />
+      <SeePassDrawer />
       <NewPassModal handleFetchPasswords={handleFetchPasswords} />
+      <DeletePassModal />
 
       <PassHeader value={searchTerm} onChange={setSearchTerm} handleFetchPasswords={handleFetchPasswords} />
 
-      <PasswordsTable rows={filteredRows} handleSeePassword={handleSeePassword} />
+      <PasswordsTable rows={filteredRows} handleSelectPass={handleSelectPass} />
     </ViewTemplate>
   );
 };

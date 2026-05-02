@@ -104,20 +104,16 @@ export const passwordsSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(fetchPasswordById.pending, (state) => {
-        //state.passLoading = true;
+        state.passLoading = true;
         state.error = null;
       })
       .addCase(fetchPasswordById.fulfilled, (state, action) => {
-        //state.passLoading = false;
-        if (action.payload.type === PasswordModalTypes.EDIT) {
-          state.newPassword = action.payload;
-        } else {
-          state.passwordSelected = action.payload;
-        }
+        state.passLoading = false;
+        state.passwordSelected = action.payload;
       })
       .addCase(fetchPasswordById.rejected, (state, action) => {
-        //state.passLoading = false;
-        //state.error = action.payload;
+        state.passLoading = false;
+        state.error = action.payload;
       })
       .addCase(fetchDeletePasswordById.pending, (state) => {
         state.passLoading = true;

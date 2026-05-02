@@ -60,7 +60,7 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-const PasswordsTable = ({ rows, handleSeePassword }) => {
+const PasswordsTable = ({ rows, handleSelectPass }) => {
   const intl = useIntl();
 
   const [page, setPage] = React.useState(0);
@@ -110,24 +110,18 @@ const PasswordsTable = ({ rows, handleSeePassword }) => {
                   text="Ver contraseña"
                   handleClick={(e) => {
                     e.preventDefault();
-                    handleSeePassword(row, PasswordModalTypes.SEE);
+                    handleSelectPass(row, PasswordModalTypes.SEE);
                   }}
                 />
               </TableCell>
               <TableCell align="left">
                 <Box sx={{ display: 'flex', gap: 1 }}>
                   <CustomIconButton
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleSeePassword(row, PasswordModalTypes.EDIT);
-                    }}
+                    onClick={() => handleSelectPass(row, PasswordModalTypes.EDIT)}
                     icon={<EditIcon fontSize="small" />}
                   />
                   <CustomIconButton
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleSeePassword(row, PasswordModalTypes.DELETE);
-                    }}
+                    onClick={() => handleSelectPass(row, PasswordModalTypes.DELETE)}
                     icon={<DeleteIcon fontSize="small" />}
                   />
                 </Box>

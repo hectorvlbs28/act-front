@@ -6,8 +6,6 @@ import userReducer from '../features/auth/store/auth.slice';
 import navigationReducer from '../store/navigation.slice';
 import passwordsReducer from '../features/passwords/store/passwords.slice';
 
-//import { listenerMiddleware } from '../store/middleware/listenerMiddleware'; .prepend(listenerMiddleware.middleware),
-
 const createPersistConfig = (key) => ({ key, storage });
 
 const persistedUserReducer = persistReducer(createPersistConfig('user'), userReducer);
