@@ -84,8 +84,14 @@ export const passwordsSlice = createSlice({
       state.newPassword = initialState.newPassword;
     },
     openNewPassword: (state) => {
-      state.newPassword.open = true;
-      state.newPassword.type = PasswordModalTypes.NEW;
+      state.passwordSelected.open = true;
+      state.passwordSelected.type = PasswordModalTypes.NEW;
+    },
+    openDeletePassword: (state) => {
+      state.passwordSelected.type = PasswordModalTypes.DELETE;
+    },
+    openEditPassword: (state) => {
+      state.passwordSelected.type = PasswordModalTypes.EDIT;
     },
   },
   extraReducers: (builder) => {
@@ -133,7 +139,14 @@ export const passwordsSlice = createSlice({
   },
 });
 
-export const { setSignOutPasswords, clearPasswordSelected, clearNewPassword, openNewPassword } = passwordsSlice.actions;
+export const {
+  setSignOutPasswords,
+  clearPasswordSelected,
+  clearNewPassword,
+  openNewPassword,
+  openDeletePassword,
+  openEditPassword,
+} = passwordsSlice.actions;
 
 export const selectPassLoading = (state) => state.Passwords.passLoading;
 export const selectPasswordsList = (state) => state.Passwords.passwordsList;

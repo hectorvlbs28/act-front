@@ -32,15 +32,13 @@ const PassHeader = ({ value, onChange, handleFetchPasswords }) => {
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <SearchBar value={value} onChange={onChange} placeholder={intl.formatMessage({ id: 'searchPlaceholder' })} />
         <CustomIconButton
-          onClick={(e) => {
-            e.preventDefault();
+          onClick={() => {
             handleFetchPasswords(true);
           }}
           icon={<RefreshIcon fontSize="small" />}
         />
         <CustomIconButton
-          onClick={(e) => {
-            e.preventDefault();
+          onClick={() => {
             dispatch(openNewPassword());
           }}
           icon={<AddIcon />}

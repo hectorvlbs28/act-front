@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 
 import { createNewPassword, updatePassword } from '../service/passwords.service';
 import { createNewPasswordBody } from '../../../shared/utils/request.utils';
-import { selectNewPassword, clearNewPassword } from '../store/passwords.slice';
+import { selectPasswordSelected, clearPasswordSelected } from '../store/passwords.slice';
 import { PasswordModalTypes } from '../../../shared/constants/enums';
 import { TOAST_MESSAGES } from '../../../shared/constants/toastMessages';
 import CustomIconButton from '../../../shared/components/ui/CustomIconButton';
@@ -16,31 +16,33 @@ import ReusableModal from '../../../shared/components/ui/ReusableModal';
 import FormField from '../../../shared/components/inputs/FormField';
 import PasswordField from '../../../shared/components/inputs/PasswordField';
 import useToast from '../../../hooks/useToast';
+import CloseButton from '../../../shared/components/ui/Buttons/CloseButton';
 
 const NewPassModal = ({ handleFetchPasswords }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const { toastError } = useToast();
 
-  const NEW_PASSWORD = useSelector(selectNewPassword);
+  const PASSWORD_SELECTED = useSelector(selectPasswordSelected);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const isEdit = NEW_PASSWORD.open && NEW_PASSWORD.type === PasswordModalTypes.EDIT;
+  const isEdit = PASSWORD_SELECTED.open && PASSWORD_SELECTED.type === PasswordModalTypes.EDIT;
+  const isOpen = PASSWORD_SELECTED.open && (isEdit || PASSWORD_SELECTED.type === PasswordModalTypes.NEW) ? true : false;
 
   const initialValues = useMemo(
     () =>
       isEdit
         ? {
-            name: NEW_PASSWORD.name || '',
-            description: NEW_PASSWORD.description || '',
-            password: NEW_PASSWORD.pswdDecrypted,
-            repeatPassword: NEW_PASSWORD.pswdDecrypted,
+            name: PASSWORD_SELECTED.name || '',
+            description: PASSWORD_SELECTED.description || '',
+            password: PASSWORD_SELECTED.pswdDecrypted,
+            repeatPassword: PASSWORD_SELECTED.pswdDecrypted,
           }
         : { name: '', description: '', password: '', repeatPassword: '' },
-    [isEdit, NEW_PASSWORD]
+    [isEdit, PASSWORD_SELECTED]
   );
 
   const validationSchema = Yup.object({
@@ -52,37 +54,37 @@ const NewPassModal = ({ handleFetchPasswords }) => {
       .required(intl.formatMessage({ id: 'FieldRequired' })),
   });
 
-  const handleCloseModal = () => {
-    if (!loading) dispatch(clearNewPassword());
+  const handleClose = () => {
+    dispatch(clearPasswordSelected());
   };
 
   const handleSubmit = async (values) => {
     if (isEdit) {
       const noChanges =
-        values.name === NEW_PASSWORD.name &&
-        values.description === NEW_PASSWORD.description &&
-        values.password === NEW_PASSWORD.pswdDecrypted;
+        values.name === PASSWORD_SELECTED.name &&
+        values.description === PASSWORD_SELECTED.description &&
+        values.password === PASSWORD_SELECTED.pswdDecrypted;
 
       if (noChanges) {
         toastError(TOAST_MESSAGES.passwords.noChanges);
         setLoading(false);
         return;
       }
-      await updatePassword(NEW_PASSWORD.id, createNewPasswordBody(values));
+      await updatePassword(PASSWORD_SELECTED.id, createNewPasswordBody(values));
     } else {
       await createNewPassword(createNewPasswordBody(values));
     }
     handleFetchPasswords(true);
-    dispatch(clearNewPassword());
+    dispatch(clearPasswordSelected());
   };
 
   return (
-    <ReusableModal open={NEW_PASSWORD.open} onClose={handleCloseModal}>
+    <ReusableModal open={isOpen} onClose={handleClose}>
       <Box display="flex" justifyContent="space-between" alignItems="flex-start">
         <Typography variant="h6" component="h2">
           <strong>{intl.formatMessage({ id: 'NewPassModalTitle' })}</strong>
         </Typography>
-        <CustomIconButton onClick={handleCloseModal} icon={<CloseIcon fontSize="small" />} />
+        <CloseButton handleClose={handleClose} />
       </Box>
 
       <Formik

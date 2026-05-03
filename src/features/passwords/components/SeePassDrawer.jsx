@@ -1,7 +1,12 @@
 import { useIntl } from 'react-intl';
 import { Drawer, Divider, Box, Typography, Stack } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectPasswordSelected, clearPasswordSelected } from '../store/passwords.slice';
+import {
+  selectPasswordSelected,
+  clearPasswordSelected,
+  openDeletePassword,
+  openEditPassword,
+} from '../store/passwords.slice';
 import { PasswordModalTypes } from '../../../shared/constants/enums';
 import CloseButton from '../../../shared/components/ui/Buttons/CloseButton';
 import ColorButton from '../../../shared/components/ui/Buttons/ColorButton';
@@ -17,6 +22,14 @@ const SeePassDrawer = () => {
 
   const handleClose = () => {
     dispatch(clearPasswordSelected());
+  };
+
+  const handleOpenDelete = () => {
+    dispatch(openDeletePassword());
+  };
+
+  const handleOpenEdit = () => {
+    dispatch(openEditPassword());
   };
 
   return (
@@ -94,8 +107,19 @@ const SeePassDrawer = () => {
             gap: 1,
           }}
         >
-          <ColorButton color="info" text={intl.formatMessage({ id: 'Edit' })} handleClick={() => {}} />
-          <ColorButton text={intl.formatMessage({ id: 'Delete' })} handleClick={() => {}} />
+          <ColorButton
+            color="info"
+            text={intl.formatMessage({ id: 'Edit' })}
+            handleClick={() => {
+              handleOpenEdit();
+            }}
+          />
+          <ColorButton
+            text={intl.formatMessage({ id: 'Delete' })}
+            handleClick={() => {
+              handleOpenDelete();
+            }}
+          />
         </Box>
       </Box>
     </Drawer>
