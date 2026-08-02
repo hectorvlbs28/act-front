@@ -71,16 +71,7 @@ const DeletePassModal = () => {
               {intl.formatMessage({ id: 'deletePasswordTitle' })}
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
-              {intl.formatMessage(
-                { id: 'deletePasswordMessage' },
-                {
-                  name: (
-                    <Typography component="span" variant="body2" fontWeight={600} color="text.primary">
-                      {PASSWORD_SELECTED.name}
-                    </Typography>
-                  ),
-                }
-              )}
+              {intl.formatMessage({ id: 'deletePasswordMessage' })}
             </Typography>
           </Box>
         </Box>

@@ -45,7 +45,11 @@
   "viewTable": "- Registros almacenados",
   "Edit": "Editar",
   "Delete": "Eliminar",
-  "deletePasswordTitle": "¿Eliminar contraseña?",
-  "deletePasswordMessage": "Estás a punto de eliminar :name. Esta acción no puede revertirse.",
-  "deletePasswordConfirm": "Sí, eliminar"
+  "deletePasswordTitle": "¿Eliminar esta contraseña?",
+  "deletePasswordMessage": "Si la eliminas, no podrás recuperarla.",
+  "deletePasswordConfirm": "Sí, eliminar",
+  "passwords.NewPassModal.EditPassModalTitle": "Editar contraseña",
+  "passwords.NewPassModal.NewPassModalTitle": "Agregar contraseña",
+  "passwords.NewPassModal.EditPassModalSubtitle": "Modifica los campos que deseas actualizar",
+  "passwords.NewPassModal.NewPassModalSubtitle": "Completa los campos para guardar el acceso"
 }

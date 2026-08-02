@@ -16,14 +16,6 @@ const initialState = {
     type: '',
     id: '',
   },
-  newPassword: {
-    open: false,
-    name: '',
-    description: '',
-    password: '',
-    id: '',
-    type: '',
-  },
 };
 
 export const fetchPasswords = createAsyncThunk('Passwords/fetchPasswords', async ({ refresh = false }, thunkAPI) => {
@@ -74,14 +66,10 @@ export const passwordsSlice = createSlice({
       state.error = null;
       state.passwordsList = [];
       state.passwordSelected = initialState.passwordSelected;
-      state.newPassword = initialState.newPassword;
       state.needUpdate = initialState.needUpdate;
     },
     clearPasswordSelected: (state) => {
       state.passwordSelected = initialState.passwordSelected;
-    },
-    clearNewPassword: (state) => {
-      state.newPassword = initialState.newPassword;
     },
     openNewPassword: (state) => {
       state.passwordSelected.open = true;
@@ -139,20 +127,14 @@ export const passwordsSlice = createSlice({
   },
 });
 
-export const {
-  setSignOutPasswords,
-  clearPasswordSelected,
-  clearNewPassword,
-  openNewPassword,
-  openDeletePassword,
-  openEditPassword,
-} = passwordsSlice.actions;
+export const { setSignOutPasswords, clearPasswordSelected, openNewPassword, openDeletePassword, openEditPassword } =
+  passwordsSlice.actions;
 
 export const selectPassLoading = (state) => state.Passwords.passLoading;
 export const selectPasswordsList = (state) => state.Passwords.passwordsList;
 export const selectIsPasswordsListEmpty = (state) => state.Passwords.passwordsList.length === 0;
 export const selectPasswordSelected = (state) => state.Passwords.passwordSelected;
-export const selectNewPassword = (state) => state.Passwords.newPassword;
 export const selectNeedUpdate = (state) => state.Passwords.needUpdate;
+export const selectListLength = (state) => state.Passwords.passwordsList.length;
 
 export default passwordsSlice.reducer;

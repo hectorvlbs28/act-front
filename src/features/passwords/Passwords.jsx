@@ -75,7 +75,6 @@ const Passwords = () => {
       <DeletePassModal />
 
       <PassHeader value={searchTerm} onChange={setSearchTerm} handleFetchPasswords={handleFetchPasswords} />
-
       <PasswordsTable rows={filteredRows} handleSelectPass={handleSelectPass} />
     </ViewTemplate>
   );
