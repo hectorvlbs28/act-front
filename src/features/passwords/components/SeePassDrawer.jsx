@@ -37,13 +37,7 @@ const SeePassDrawer = () => {
       anchor="right"
       open={isOpen}
       onClose={handleClose}
-      PaperProps={{
-        sx: {
-          width: 380,
-          backgroundColor: 'background.paper',
-          backgroundImage: 'none',
-        },
-      }}
+      slotProps={{ paper: { sx: { width: 380, backgroundColor: 'background.paper', backgroundImage: 'none' } } }}
     >
       <Box
         sx={{

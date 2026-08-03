@@ -29,13 +29,8 @@ const DeletePassModal = () => {
       onClose={() => handleClose()}
       maxWidth="xs"
       fullWidth
-      PaperProps={{
-        sx: {
-          borderRadius: 3,
-          border: '1px solid',
-          borderColor: 'error.main',
-          backgroundImage: 'none',
-        },
+      slotProps={{
+        paper: { sx: { borderRadius: 3, border: '1px solid', borderColor: 'error.main', backgroundImage: 'none' } },
       }}
     >
       <Box

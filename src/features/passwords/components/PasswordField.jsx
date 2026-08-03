@@ -6,7 +6,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
 
-import useToast from '../../../hooks/useToast';
+import useToast from '../../../Hooks/useToast';
 import { selectPasswordSelected } from '../store/passwords.slice';
 import { TOAST_MESSAGES } from '../../../shared/constants/toastMessages';
 

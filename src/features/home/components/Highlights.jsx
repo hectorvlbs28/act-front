@@ -10,7 +10,7 @@ import { useIntl } from 'react-intl';
 import { Typography, Stack, Container, Card, Box } from '@mui/material';
 
 const HighlightItem = React.memo(({ icon, title }) => (
-  <Grid item xs={12} sm={6} md={4}>
+  <Grid size={{ xs: 12, sm: 6, md: 4 }}>
     <Stack
       direction="column"
       align="center"

@@ -23,7 +23,7 @@ import { PasswordModalTypes } from '../../../shared/constants/enums';
 import { TOAST_MESSAGES } from '../../../shared/constants/toastMessages';
 import FormField from '../../../shared/components/inputs/FormField';
 import PasswordField from '../../../shared/components/inputs/PasswordField';
-import useToast from '../../../hooks/useToast';
+import useToast from '../../../Hooks/useToast';
 import CloseButton from '../../../shared/components/ui/Buttons/CloseButton';
 
 const NewPassModal = ({ handleFetchPasswords }) => {
@@ -95,15 +95,9 @@ const NewPassModal = ({ handleFetchPasswords }) => {
   return (
     <Dialog
       open={isOpen}
-      //onClose={handleClose}
       maxWidth="sm"
       fullWidth
-      PaperProps={{
-        sx: {
-          borderRadius: 3,
-          backgroundImage: 'none',
-        },
-      }}
+      slotProps={{ paper: { sx: { borderRadius: 3, backgroundImage: 'none' } } }}
     >
       <Formik
         initialValues={initialValues}
@@ -161,7 +155,7 @@ const NewPassModal = ({ handleFetchPasswords }) => {
 
                 {/* Contraseña y confirmar — 2 columnas */}
                 <Grid container spacing={1.5}>
-                  <Grid item xs={12} sm={6}>
+                  <Grid size={{ xs: 12, sm: 6 }}>
                     <PasswordField
                       name="password"
                       label={intl.formatMessage({ id: 'Password' })}
@@ -171,7 +165,7 @@ const NewPassModal = ({ handleFetchPasswords }) => {
                       helperText={touched.password && errors.password}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid size={{ xs: 12, sm: 6 }}>
                     <PasswordField
                       name="repeatPassword"
                       label={intl.formatMessage({ id: 'RepeatPassword' })}

@@ -10,12 +10,14 @@ const SearchBar = ({ value, onChange, placeholder = 'Buscar...', ...props }) => 
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       sx={{ width: 280 }}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <SearchIcon fontSize="small" />
-          </InputAdornment>
-        ),
+      slotProps={{
+        input: {
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon fontSize="small" />
+            </InputAdornment>
+          ),
+        },
       }}
       {...props}
     />
