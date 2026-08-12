@@ -28,7 +28,6 @@ const StackStyled = styled(Stack)(({ theme }) => ({
 }));
 
 const ContainerStyled = styled(Container)(({ theme }) => ({
-  marginTop: theme.spacing(10),
   display: 'flex',
   flexDirection: 'column',
   alignContent: 'center',

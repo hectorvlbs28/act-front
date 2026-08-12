@@ -21,6 +21,7 @@
   "loginErrorUserName": "Ingresa un nombre de usuario valido.",
   "loginErrorPassword": "La contraseña debe tener al menos 6 carácteres.",
   "homeBtn": "Inicio",
+  "adminSection": "Administración",
   "signOutBtn": "Cerrar sesión",
   "passwordsBtn": "Contraseñas",
   "passwordTitle": "Administrador de contraseñas",

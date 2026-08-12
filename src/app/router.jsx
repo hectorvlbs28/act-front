@@ -1,12 +1,12 @@
 import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { CssBaseline } from '@mui/material';
+import { Box, CssBaseline } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
-import toast from 'react-hot-toast';
 
 import AppTheme from './theme/AppTheme';
-import AppAppBar from '../shared/components/AppBar/AppAppBar';
+import AppSidebar from '../shared/components/Sidebar/AppSidebar';
+import { SidebarProvider, useSidebar } from '../shared/components/Sidebar/SidebarContext';
 import Loading from '../shared/components/ui/Loading';
 import TokenExpirationChecker from '../shared/components/ui/TokenExpirationChecker';
 import SignInProtect from '../shared/components/ui/SignInProtect';
@@ -22,9 +22,30 @@ const SignIn = lazy(() => import('../features/auth/SignIn'));
 const SignUp = lazy(() => import('../features/auth/SignUp'));
 const Passwords = lazy(() => import('../features/passwords/Passwords'));
 
+const MainContent = ({ children }) => {
+  const { width } = useSidebar();
+
+  return (
+    <Box
+      component="main"
+      sx={{
+        minHeight: '100vh',
+        transition: (theme) =>
+          theme.transitions.create('margin-left', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+          }),
+        ml: { xs: 0, md: `${width}px` },
+      }}
+    >
+      {children}
+    </Box>
+  );
+};
+
 const App = () => {
   const dispatch = useDispatch();
-  const { toastError } = useToast();
+  const { toastError, toastSuccess } = useToast();
   const USER_LOGGED = useSelector(selectIsLogged);
   const USER_TOKEN = useSelector(selectUserToken);
 
@@ -47,9 +68,9 @@ const App = () => {
       (response) => {
         dispatch(setApiLoading({ status: false }));
         if (response.data?.message) {
-          toast.success(response.data.message);
+          toastSuccess(response.data.message);
         } else if (response.status >= 200 && response.status < 300) {
-          toast.success('Operación realizada con éxito.');
+          toastSuccess('Operación realizada con éxito.');
         }
         return response;
       },
@@ -84,22 +105,27 @@ const App = () => {
       <Router>
         {USER_LOGGED ? <TokenExpirationChecker /> : null}
         <CssBaseline enableColorScheme />
-        <AppAppBar />
 
-        <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            <Route path={Links.home} element={<Home />} />
+        <SidebarProvider>
+          <AppSidebar />
 
-            <Route element={<SignInProtect />}>
-              <Route path={Links.signIn} element={<SignIn />} />
-            </Route>
+          <MainContent>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Routes>
+                <Route path={Links.home} element={<Home />} />
 
-            <Route element={<ProtectedRoute />}>
-              <Route path={Links.passwords} element={<Passwords />} />
-              <Route path={Links.SignUp} element={<SignUp />} />
-            </Route>
-          </Routes>
-        </Suspense>
+                <Route element={<SignInProtect />}>
+                  <Route path={Links.signIn} element={<SignIn />} />
+                </Route>
+
+                <Route element={<ProtectedRoute />}>
+                  <Route path={Links.passwords} element={<Passwords />} />
+                  <Route path={Links.SignUp} element={<SignUp />} />
+                </Route>
+              </Routes>
+            </Suspense>
+          </MainContent>
+        </SidebarProvider>
       </Router>
     </AppTheme>
   );
